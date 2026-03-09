@@ -1,7 +1,7 @@
 ---
 name: cursor-mastery
-description: Comprehensive expert guide for Cursor AI editor best practices, rules configuration, agent mode, context management, MCP servers, prompt engineering, keyboard shortcuts, and advanced workflows. Covers everything from first setup to autonomous agent orchestration.
-argument-hint: "[topic] e.g. rules, agent, context, mcp, prompts, shortcuts, tab, chat, composer, privacy, anti-patterns"
+description: Comprehensive expert guide for Cursor AI editor best practices, rules configuration, agent mode, context management, MCP servers, prompt engineering, keyboard shortcuts, advanced workflows, skills, subagents, hooks, cloud agents, Bugbot, CLI, and integrations. Covers everything from first setup to autonomous agent orchestration.
+argument-hint: "[topic] e.g. rules, agent, context, mcp, prompts, shortcuts, tab, chat, composer, privacy, anti-patterns, skills, subagents, hooks, cloud-agents, bugbot, cli, integrations"
 ---
 
 # Cursor Mastery - Expert Knowledge Base
@@ -25,6 +25,9 @@ When the user asks about a topic, consult the relevant guide file for detailed i
 - **Advanced Workflows**: See [guides/08-advanced-workflows.md](guides/08-advanced-workflows.md)
 - **Privacy, Security & Settings**: See [guides/09-privacy-and-settings.md](guides/09-privacy-and-settings.md)
 - **Anti-Patterns & Common Mistakes**: See [guides/10-anti-patterns.md](guides/10-anti-patterns.md)
+- **Skills, Subagents & Hooks**: See [guides/11-skills-subagents-hooks.md](guides/11-skills-subagents-hooks.md)
+- **Cloud Agents & Bugbot**: See [guides/12-cloud-agents-bugbot.md](guides/12-cloud-agents-bugbot.md)
+- **CLI & Integrations**: See [guides/13-cli-and-integrations.md](guides/13-cli-and-integrations.md)
 
 ## Quick Reference: Cursor Features
 

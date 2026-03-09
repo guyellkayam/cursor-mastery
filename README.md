@@ -4,7 +4,7 @@ A comprehensive knowledge base for mastering [Cursor](https://cursor.com) — th
 
 ## What's Inside
 
-**10 in-depth guides** covering every Cursor feature with practical, copy-paste-ready examples.
+**13 in-depth guides** covering every Cursor feature with practical, copy-paste-ready examples.
 
 | # | Guide | What You'll Learn |
 |---|-------|-------------------|
@@ -18,6 +18,9 @@ A comprehensive knowledge base for mastering [Cursor](https://cursor.com) — th
 | 08 | [Advanced Workflows](guides/08-advanced-workflows.md) | TDD, Plan-Implement-Verify, multi-model, git workflows |
 | 09 | [Privacy & Settings](guides/09-privacy-and-settings.md) | Privacy mode, model config, keyboard shortcuts, plans |
 | 10 | [Anti-Patterns](guides/10-anti-patterns.md) | Common mistakes and the 10 golden rules |
+| 11 | [Skills, Subagents & Hooks](guides/11-skills-subagents-hooks.md) | Portable skills, custom AI workers, automation hooks |
+| 12 | [Cloud Agents & Bugbot](guides/12-cloud-agents-bugbot.md) | Remote VMs, auto PR review, parallel agents |
+| 13 | [CLI & Integrations](guides/13-cli-and-integrations.md) | Terminal CLI, Slack, Linear, GitHub, JetBrains, CI/CD |
 
 ## Quick Start
 
