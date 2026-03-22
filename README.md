@@ -88,6 +88,30 @@ Connect databases, GitHub, APIs via `.cursor/mcp.json`:
 9. Use the right tool — Tab, Cmd+K, Chat, Composer, Agent
 10. Treat AI as a collaborator — guide it, review it, iterate
 
+## Resources
+
+**87 curated resource files** organized by domain — rules, plugins, MCP servers, agent patterns, workflows, and templates.
+
+| Domain | What's Inside | Start Here |
+|--------|--------------|------------|
+| [Rules Library](resources/rules-library/) | .cursorrules & .mdc collections (35K+ star repos) | [by-language.md](resources/rules-library/by-language.md) |
+| [Marketplace Plugins](resources/marketplace-plugins/) | 100+ plugins: Figma, AWS, Linear, Stripe... | [development.md](resources/marketplace-plugins/development.md) |
+| [MCP Servers](resources/mcp-servers/) | 75+ servers with copy-paste configs | [config-examples](resources/mcp-servers/config-examples/mcp-json-templates.md) |
+| [DevOps](resources/devops/) | k3s, ArgoCD, Vault, Terraform, GitHub Actions | [workflows.md](resources/devops/workflows.md) |
+| [Security](resources/security/) | OWASP, Kyverno, Trivy, Falco, shift-left | [rules.md](resources/security/rules.md) |
+| [Agents & Orchestration](resources/agents-and-orchestration/) | Agent modes, subagents, cloud agents, Boris Cherny 7 principles | [prompt-engineering.md](resources/agents-and-orchestration/prompt-engineering.md) |
+| [Hooks Library](resources/hooks-library/) | Pre/post tool use, session, notifications | [pre-tool-use.md](resources/hooks-library/pre-tool-use.md) |
+| [Rules Templates](resources/cursor-rules-templates/) | Ready-to-drop starter kits (5/15/30 rules) | [starter-5-rules.md](resources/cursor-rules-templates/progressive-complexity/starter-5-rules.md) |
+| [Document Creation](resources/document-creation/) | PRD, runbooks, API docs, compliance | [prd-and-specs.md](resources/document-creation/prd-and-specs.md) |
+| [Finance](resources/finance/) | Equity research, FinOps, Stripe, AlphaVantage | [workflows.md](resources/finance/workflows.md) |
+| [Python](resources/python/) | FastAPI, Django, pytest, data science | [rules.md](resources/python/rules.md) |
+| [AI & ML](resources/ai-and-ml/) | Model selection, local LLMs, Hugging Face, RAG | [model-selection.md](resources/ai-and-ml/model-selection.md) |
+| [Community Index](resources/community-index/) | awesome-cursorrules, cursor.directory, forum guides | [awesome-cursorrules-digest.md](resources/community-index/awesome-cursorrules-digest.md) |
+
+**[Daily Cheatsheet →](resources/curated-top-picks.md)** — top picks per domain with install commands.
+
+**[Full Resource Index →](resources/README.md)** — complete navigation table.
+
 ## Research Sources
 
 - [Cursor Official Docs](https://cursor.com/docs)

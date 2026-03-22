@@ -50,6 +50,30 @@ Cmd+/         — Switch AI models
 **Context is king. The AI is only as good as what it sees.**
 Too little context = hallucination. Too much = confusion. Every best practice exists to optimize what the AI sees in its limited context window.
 
+## Resources (Domain-Specific)
+
+When the user asks about a specific domain, consult the resources folder:
+
+- **Rules / .mdc files**: See [resources/rules-library/](resources/rules-library/)
+- **Marketplace Plugins**: See [resources/marketplace-plugins/](resources/marketplace-plugins/)
+- **MCP Servers**: See [resources/mcp-servers/](resources/mcp-servers/)
+- **DevOps (Terraform, k8s, CI/CD, GitOps)**: See [resources/devops/](resources/devops/)
+- **Finance (equity research, FinOps)**: See [resources/finance/](resources/finance/)
+- **Security (OWASP, scanning, compliance)**: See [resources/security/](resources/security/)
+- **Python (FastAPI, Django, data science)**: See [resources/python/](resources/python/)
+- **Project Management (Linear, Jira)**: See [resources/project-management/](resources/project-management/)
+- **Document Creation (PRD, runbooks, API docs)**: See [resources/document-creation/](resources/document-creation/)
+- **Agent Orchestration (modes, subagents, cloud)**: See [resources/agents-and-orchestration/](resources/agents-and-orchestration/)
+- **Hooks (pre/post tool use, session)**: See [resources/hooks-library/](resources/hooks-library/)
+- **Cursor Rules Templates (starter kits)**: See [resources/cursor-rules-templates/](resources/cursor-rules-templates/)
+- **AI & ML (model selection, local LLMs)**: See [resources/ai-and-ml/](resources/ai-and-ml/)
+- **Data Analysis (Databricks, Snowflake)**: See [resources/data-analysis/](resources/data-analysis/)
+- **Cloud & Infra (AWS, Vercel, Cloudflare)**: See [resources/cloud-and-infra/](resources/cloud-and-infra/)
+- **Git & GitHub**: See [resources/git-and-github/](resources/git-and-github/)
+- **Databases (PostgreSQL, Redis)**: See [resources/databases/](resources/databases/)
+- **Community (awesome-cursorrules, forum)**: See [resources/community-index/](resources/community-index/)
+- **Top Picks / Daily Cheatsheet**: See [resources/curated-top-picks.md](resources/curated-top-picks.md)
+
 ## Response Guidelines
 
 When answering questions:
