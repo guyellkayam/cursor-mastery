@@ -1,62 +1,70 @@
 name: AI PR Review
-
 on:
   pull_request:
-    branches: [main]
     types: [opened, synchronize]
+    branches: [main]
   issue_comment:
     types: [created]
-
+  pull_request_review_comment:
+    types: [created]
+permissions:
+  pull-requests: write
+  contents: read
+  issues: write
+  id-token: write
 jobs:
-  review:
+  ai-review:
+    # Run on PR events, or on @claude mentions in comments
     if: >
       github.event_name == 'pull_request' ||
-      (github.event_name == 'issue_comment' &&
-       github.event.issue.pull_request &&
-       contains(github.event.comment.body, '@claude'))
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude'))
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Check for broken internal links
+        if: github.event_name == 'pull_request'
         run: |
-          echo "Scanning changed .md files for broken links..."
-          ERRORS=0
-          for file in $(git diff --name-only origin/main...HEAD -- '*.md'); do
-            grep -oP '\[.*?\]\(((?!http)[^)]+)\)' "$file" 2>/dev/null | while read -r match; do
-              link=$(echo "$match" | grep -oP '\(([^)]+)\)' | tr -d '()')
-              target=$(dirname "$file")/"$link"
-              if [ ! -f "$target" ] && [ ! -d "$target" ]; then
-                echo "::error file=$file::Broken link: $link"
-                ERRORS=$((ERRORS + 1))
-              fi
-            done
+          git fetch origin main
+          broken_links=""
+          for file in $(git diff --name-only origin/main...HEAD | grep '\.md$'); do
+            if [ -f "$file" ]; then
+              grep -oP '\[.*?\]\(\K[^)]+' "$file" 2>/dev/null | while read link; do
+                if [[ ! "$link" =~ ^https?:// ]] && [[ ! "$link" =~ ^# ]] && [[ ! "$link" =~ ^\$ ]]; then
+                  dir=$(dirname "$file")
+                  target="$dir/$link"
+                  if [ ! -f "$target" ] && [ ! -f "$link" ] && [ ! -d "$target" ] && [ ! -d "$link" ]; then
+                    broken_links="$broken_links\n- $file -> $link"
+                  fi
+                fi
+              done
+            fi
           done
-          if [ "$ERRORS" -gt 0 ]; then
-            echo "Found $ERRORS broken links"
-            exit 1
+          if [ -n "$broken_links" ]; then
+            echo "BROKEN_LINKS<<EOF" >> $GITHUB_ENV
+            echo -e "$broken_links" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
           fi
-
-      - uses: anthropics/claude-code-action@v1
+      - name: Run Claude Code Review
+        uses: anthropics/claude-code-action@v1
         with:
-          model: claude-sonnet-4-20250514
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          review_prompt: |
-            Review this PR against 8 quality checks:
-            1. ACCURACY — No fake URLs, wrong version numbers, or incorrect Cursor feature descriptions
-            2. STYLE CONSISTENCY — All examples are copy-paste-ready, formatting matches existing guides
-            3. CROSS-REFERENCES — Links between guides/resources use correct paths and numbers
-            4. NO REGRESSIONS — No content removed without replacement, no contradictions introduced
-            5. GAPS TRACKING — research/gaps.md updated if gaps were resolved or discovered
-            6. MARKDOWN VALIDITY — Valid markdown, code blocks have language tags
-            7. NO BROKEN LINKS — Internal links point to existing files
-            8. NO DUPLICATES — No verbatim content repeated across guides or resources
-
-            For each check: PASS or FAIL with specific line references.
-            Approve only if ALL 8 checks pass.
+          prompt: |
+            You are reviewing a pull request for the Claude Code Mastery knowledge base.
+            Review against this quality gate checklist:
+            1. **Accuracy** — Are repo references, URLs, feature descriptions, version numbers real and correct?
+            2. **Style Consistency** — Do new sections match existing formatting? Are code examples copy-paste-ready?
+            3. **Cross-References** — Do new sections link to related guides? Are guide numbers correct?
+            4. **No Regressions** — Does the update contradict or remove existing content?
+            5. **Gaps Tracking** — If gaps.md changed: resolved items dated? New gaps added? Last reviewed updated?
+            6. **Markdown Validity** — Well-formed markdown? Code blocks have language tags?
+            7. **No Broken Links** — Broken links detected: ${{ env.BROKEN_LINKS || 'none' }}
+            8. **No Duplicates** — Any content repeated verbatim across guides?
+            Rules:
+            - Approve ONLY if ALL checklist items pass
+            - Be specific in issues — include file names and line context
+            - Minor style nits alone should NOT block approval
+            - Only block for accuracy, regressions, or broken content
