@@ -2,6 +2,15 @@
 
 > **TL;DR**: Model Context Protocol servers give Cursor agent access to external tools — databases, APIs, cloud services. Configure in `.cursor/mcp.json`.
 
+## Ecosystem (March 2026)
+
+- **10,000+** public MCP servers across the ecosystem
+- **MCP TypeScript SDK v1.27** — 34,700+ dependent npm projects
+- **Governance**: MCP donated to Agentic AI Foundation (Linux Foundation) — co-founded by Anthropic, Block, OpenAI
+- **Google**: Official managed MCP servers for all Google/Google Cloud services
+- **FastMCP**: Python framework for building MCP servers (featured on Thoughtworks Technology Radar)
+- **MCP Apps**: Cursor 2.6 renders interactive UIs from MCP servers directly in chat
+
 ## How MCP Works in Cursor
 
 1. MCP servers expose **tools** that the agent can call
@@ -63,12 +72,22 @@ Cursor only sends the first 40 tools. Manage this:
 ```
 **Trade-off**: Slightly slower invocation, but unlimited tools.
 
+## Top MCP Servers by Usage (FastMCP Analytics, March 2026)
+
+| Rank | Server | Views | Category |
+|------|--------|-------|----------|
+| 1 | **Context7** | 11,000+ | Memory management |
+| 2 | **Playwright** | ~6,000 | Browser automation |
+| 3 | **Desktop Commander** | — | Terminal & file ops |
+
 ## Registries & Discovery
 
 | Registry | URL | Servers |
 |----------|-----|---------|
 | Official MCP Registry | [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io/) | Official + verified |
+| MCP.so | [mcp.so](https://mcp.so/) | Community marketplace (10K+) |
 | MCP Servers Directory | [mcpservers.org](https://mcpservers.org/) | 5,000+ community |
+| FastMCP Directory | [fastmcp.me](https://fastmcp.me/) | 1,864+ servers with analytics |
 | PulseMCP | [pulsemcp.com](https://www.pulsemcp.com/) | Curated collection |
 | Awesome MCP Servers | [github.com/wong2/awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers) | GitHub awesome list |
 | cursor.directory | [cursor.directory](https://cursor.directory) | Cursor-specific |

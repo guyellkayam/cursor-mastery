@@ -1,6 +1,6 @@
 # Cursor Marketplace Plugins
 
-> **TL;DR**: 100+ plugins available from cursor.com/marketplace — bundled packages of MCP servers, skills, subagents, hooks, and rules.
+> **TL;DR**: 130+ plugins available from cursor.com/marketplace — bundled packages of MCP servers, skills, subagents, hooks, and rules. Launched Feb 17, 2026 (Cursor 2.5), expanded with 30+ new plugins on Mar 11, 2026.
 
 ## What Is a Plugin?
 
@@ -30,5 +30,6 @@ A Cursor plugin bundles one or more of these primitives:
 ## Browse & Discover
 
 - **Official**: [cursor.com/marketplace](https://cursor.com/marketplace)
-- **Community**: [cursor.directory](https://cursor.directory)
-- **Teams**: Private team marketplaces (Enterprise feature)
+- **Community**: [cursor.directory](https://cursor.directory) (75K+ developers)
+- **Teams**: Private team marketplaces (Cursor 2.6, Teams/Enterprise plans)
+- **Plugin Spec**: [github.com/cursor/plugins](https://github.com/cursor/plugins)

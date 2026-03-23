@@ -4,12 +4,13 @@
 
 ## What Is cursor.directory?
 
-[cursor.directory](https://cursor.directory) is the central community hub for Cursor AI:
-- **Plugins**: 100+ community and official plugins
-- **MCP Servers**: 75+ external tool integrations
+[cursor.directory](https://cursor.directory) is the central community hub for Cursor AI with 75,100+ developers:
+- **Plugins**: 130+ community and official plugins
+- **MCP Servers**: 100+ external tool integrations
 - **Rules**: .mdc files for various frameworks
 - **Events**: Community meetups
 - **Jobs**: AI engineering positions
+- **Board**: Trending topics at [cursor.directory/board](https://cursor.directory/board)
 
 ## How to Browse
 

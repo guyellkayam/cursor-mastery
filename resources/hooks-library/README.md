@@ -11,35 +11,37 @@ Hooks are shell commands that execute automatically in response to Cursor agent 
 - **Notifications** — Alert external systems (Jira, Gmail, Confluence) when work completes
 - **Context management** — Load project state at session start, save progress at session end
 
-## Hook Types
+## Hook Lifecycle Events
 
-| Type | When it Fires | Use Case |
-|------|--------------|----------|
-| **PreToolUse** | Before any tool call (file edit, terminal command, etc.) | Security gates, file protection, conventional commits |
-| **PostToolUse** | After a tool call completes | Auto-format, test trigger, change logging |
-| **SessionStart** | When a new Cursor session begins | Load context, restore state, check environment |
-| **PostStop** | When a session ends or agent stops | Save progress, cost logging, summary generation |
-| **SubagentStop** | When a background agent completes | Aggregate results, trigger next phase |
-| **Notification** | When agent wants to notify the user | External alerts: email, Jira, Telegram |
+> Hooks were introduced in Cursor 1.7 (Oct 2025). Currently in beta — APIs may change.
+
+| Event | When It Fires | Use Case |
+|-------|--------------|----------|
+| **beforeSubmitPrompt** | When a prompt is first submitted | Prompt validation, context injection |
+| **beforeShellExecution** | Before a terminal command runs | Security gates, command blocking |
+| **beforeMCPExecution** | Before an MCP tool call | Access control, rate limiting |
+| **beforeReadFile** | Before reading a file | File access control |
+| **afterFileEdit** | After a file is edited | Auto-format, lint, test trigger |
+| **stop** | When the agent stops | Cost logging, summary, notifications |
 
 ## Configuration
 
-Hooks are configured in your Cursor settings or project configuration:
+Hooks are configured in `.cursor/hooks.json` (project) or `~/.cursor/hooks.json` (global). Command paths are relative to the hooks.json file location. All hooks from all config locations are merged and executed.
 
 ### Project-Level Hooks
 ```json
-// .cursor/hooks.json (or equivalent project config)
 {
+  "version": 1,
   "hooks": {
-    "PreToolUse": [
+    "beforeShellExecution": [
       {
-        "command": "bash .cursor/hooks/pre-tool-use.sh",
-        "description": "Security gate: block writes to protected files"
+        "command": "bash .cursor/hooks/security-gate.sh",
+        "description": "Block dangerous commands"
       }
     ],
-    "PostToolUse": [
+    "afterFileEdit": [
       {
-        "command": "bash .cursor/hooks/post-tool-use.sh",
+        "command": "bash .cursor/hooks/format.sh",
         "description": "Auto-format after edits"
       }
     ]
@@ -49,18 +51,22 @@ Hooks are configured in your Cursor settings or project configuration:
 
 ### Global Hooks
 ```json
-// ~/.cursor/hooks.json
 {
+  "version": 1,
   "hooks": {
-    "SessionStart": [
+    "stop": [
       {
-        "command": "bash ~/.cursor/hooks/session-start.sh",
-        "description": "Load global context on every session"
+        "command": "bash ~/.cursor/hooks/on-stop.sh",
+        "description": "Log cost and generate summary"
       }
     ]
   }
 }
 ```
+
+### Hook Script I/O
+
+Hook scripts receive structured JSON on stdin (event context: tool name, file path, command, etc.) and return JSON on stdout to approve, modify, or block the action.
 
 ## Hook Files in This Library
 

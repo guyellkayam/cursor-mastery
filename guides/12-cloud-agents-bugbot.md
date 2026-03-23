@@ -40,10 +40,39 @@ RUN apt-get update && apt-get install -y \
 Create `.cursor/environment.json` in your repo:
 ```json
 {
+  "baseImage": "ghcr.io/cursor-images/node-20:latest",
   "install": "npm install",
-  "start": "npm run dev"
+  "start": "npm run dev",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npm run dev",
+      "ports": [3000]
+    }
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "persistedDirectories": [
+    "node_modules",
+    ".next"
+  ]
 }
 ```
+
+### Environment JSON Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `baseImage` | string | Base Docker image (e.g., `ghcr.io/cursor-images/node-20:latest`) |
+| `build.dockerfile` | string | Path to custom Dockerfile for system-level deps |
+| `build.context` | string | Docker build context path |
+| `snapshot` | string | Cached disk image ID for fast boot (written by "Snapshot disk" in UI) |
+| `install` | string | Idempotent install command (runs once, disk state cached) |
+| `start` | string | Start command (runs when agent begins) |
+| `terminals` | array | Background processes (name, command, ports) |
+| `env` | object | Environment variables (avoid secrets here — use Settings > Background Agents > Secrets) |
+| `persistedDirectories` | array | Directories preserved across sessions |
 
 ### Environment Priority
 1. Repository `.cursor/environment.json` (highest)
@@ -110,10 +139,15 @@ Bugbot is Cursor's automated pull request reviewer. It scans PRs for bugs, sugge
 - **Autofix**: Spawns Cloud Agents to fix issues it finds
 - Attaches screenshots and artifacts to PRs
 
-### Stats
+### Stats (as of March 2026)
 - Reviews 2M+ PRs per month
-- 76% issue resolution rate
+- 76% issue resolution rate (up from 52%)
 - 35%+ of Autofix changes merge successfully
+- Issues identified per run nearly doubled in last 6 months
+- Customers include Rippling, Discord, Samsara, Airtable, Sierra AI
+
+### GA Release (February 25, 2026)
+Bugbot Autofix reached general availability, closing the loop between bug detection and resolution. Bugbot transitioned from a pipeline-based system to a **fully agentic architecture** in fall 2025 — the agent reasons over diffs, calls tools dynamically, and decides where to investigate further at runtime.
 
 ### Setup
 1. Go to https://cursor.com (dashboard)
@@ -122,7 +156,7 @@ Bugbot is Cursor's automated pull request reviewer. It scans PRs for bugs, sugge
 
 ### How It Works
 1. PR is created or updated
-2. Bugbot analyzes all changed files
+2. Bugbot analyzes all changed files using agentic reasoning
 3. Posts inline review comments for issues found
 4. **Autofix** (if enabled): Spawns a Cloud Agent in a VM
 5. Cloud Agent attempts to fix the identified issues
@@ -132,17 +166,35 @@ Bugbot is Cursor's automated pull request reviewer. It scans PRs for bugs, sugge
 - Enable/disable per-repo in dashboard
 - Disable per-PR: comment `@cursor autofix off`
 - Team accounts: enabled by default
+- **Custom rules**: Define review rules and best practices per-repo
+- **Specialized automations**: e.g., "Agentic Security Review" that forwards findings to Slack
 
-### Roadmap
-- Code verification
-- Deep research capabilities
-- Continuous codebase scanning
+---
+
+## Automations (March 5, 2026)
+
+Automations are always-on agents that run based on triggers and instructions you define — essentially programmable Cloud Agents.
+
+### How Automations Work
+- Run on schedules or triggered by events from **Slack, Linear, GitHub, PagerDuty, and webhooks**
+- When invoked, the agent spins up a cloud sandbox with your configured MCPs and models
+- Agents have access to a **memory tool** that lets them learn from past runs and improve with repetition
+- Cursor runs hundreds of automations per hour internally
+
+### Use Cases
+- **Bugbot**: The original automation — runs on every PR open/update
+- **Incident response**: PagerDuty triggers an agent that queries server logs via MCP
+- **Security review**: Specialized automation that forwards findings to a private Slack channel
+- **Scheduled maintenance**: Periodic dependency updates, dead code scanning
+
+### Setup
+Configure automations in the Cursor dashboard under **Automations** tab.
 
 ---
 
 ## Parallel Agents
 
-Run up to 8 agents concurrently from a single prompt.
+Run up to 20 agents concurrently (up from 8 at Cursor 2.0 launch).
 
 ### How It Works
 - Each agent gets an isolated git worktree (or remote machine)
