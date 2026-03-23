@@ -4,8 +4,9 @@
 
 ## Repository Overview
 
-- **Stars**: 35,000+
-- **Format**: .cursorrules (legacy) + .mdc (modern)
+- **Stars**: 35,000+ (31.3K+ on GitHub as of March 2026)
+- **Rules**: 163+ distinct .cursorrules files (Jan 2026 count)
+- **Format**: .cursorrules (legacy) + .mdc (modern — community conversion scripts available)
 - **Coverage**: 100+ frameworks, languages, and domains
 - **URL**: [github.com/PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules)
 

@@ -139,7 +139,7 @@ Never suggest changes — only report findings.
 | `description` | string | When to use this subagent |
 | `model` | string | `"fast"`, `"inherit"`, or specific model ID |
 | `readonly` | boolean | Restrict write permissions |
-| `background` | boolean | Run without blocking |
+| `is_background` | boolean | Run without blocking (note: `is_background`, not `background`) |
 
 ### Execution Modes
 
@@ -210,41 +210,61 @@ Planner (plan) → Implementer (build) → Verifier (validate)
 
 ## Hooks
 
-Hooks are not fully documented in public Cursor docs yet. Based on the Skills docs and community patterns, hooks in Cursor work similarly to pre/post scripts:
+Hooks were introduced in Cursor 1.7 and allow external scripts to run at defined stages of the agent loop. Each hook is configured via JSON and executed as a standalone process, receiving structured input over stdin and returning output to Cursor.
 
-### How Hooks Work (Based on Skills Integration)
-Skills can include hooks — scripts that run before or after agent actions:
+> **Status**: Hooks are currently in beta — APIs may change.
 
+### Supported Lifecycle Events
+
+| Event | When It Fires | Use Case |
+|-------|--------------|----------|
+| `beforeSubmitPrompt` | When the prompt is first submitted | Prompt validation, context injection |
+| `beforeShellExecution` | Before a terminal command runs | Security gates, command blocking |
+| `beforeMCPExecution` | Before an MCP tool call | Access control, rate limiting |
+| `beforeReadFile` | Before reading a file | File access control |
+| `afterFileEdit` | After a file is edited | Auto-format, lint, test trigger |
+| `stop` | When the agent stops | Cost logging, summary, notifications |
+
+### Configuration: `.cursor/hooks.json`
+
+Hooks are configured in `.cursor/hooks.json` (project) or `~/.cursor/hooks.json` (global). Hook command paths are relative to the hooks.json file location.
+
+```json
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "bash .cursor/hooks/format.sh",
+        "description": "Auto-format after edits"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "bash .cursor/hooks/security-gate.sh",
+        "description": "Block dangerous commands"
+      }
+    ],
+    "stop": [
+      {
+        "command": "bash .cursor/hooks/on-stop.sh",
+        "description": "Log cost and generate summary"
+      }
+    ]
+  }
+}
 ```
-.cursor/skills/
-  my-skill/
-    SKILL.md
-    scripts/
-      pre-commit.sh      # Runs before git commit
-      post-edit.sh        # Runs after file edits
-      lint-check.sh       # Custom validation
-```
 
-### Hook Configuration in Skills
-In SKILL.md, reference hook scripts:
-```markdown
----
-name: quality-gate
-description: Enforces code quality with automatic linting and testing after edits.
----
+### Merging Behavior
 
-## Hooks
-- After editing TypeScript files, run: `scripts/lint-check.sh`
-- Before commit, run: `scripts/pre-commit.sh`
-```
+All hooks from all config locations are executed — if you have two `stop` hooks in project config and one in global config, all three run.
 
-### Community Patterns
-From the Cursor Blog's best practices, hooks enable:
-- **Long-running loops**: Auto-continue agent work until tests pass
-- **Post-edit validation**: Lint/format after file changes
-- **Pre-commit checks**: Security scans before committing
+### Hook Script Input/Output
+
+Hook scripts receive structured JSON on stdin with context about the event (tool name, file path, command, etc.). They return JSON on stdout to approve, modify, or block the action.
 
 ## Sources
 - [Cursor Docs: Skills](https://cursor.com/docs/customizing/skills)
 - [Cursor Docs: Subagents](https://cursor.com/docs/customizing/subagents)
+- [Cursor Docs: Hooks](https://cursor.com/docs/hooks)
 - [Cursor Blog: Agent Best Practices](https://cursor.com/blog/agent-best-practices)

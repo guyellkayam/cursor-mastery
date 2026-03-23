@@ -75,6 +75,8 @@ These handle OAuth and configuration automatically.
 
 ## Popular MCP Servers
 
+> As of March 2026, there are 10,000+ public MCP servers. The top servers by usage (per FastMCP analytics) are Context7, Playwright, and Desktop Commander.
+
 ### Development & Git
 
 **GitHub**
@@ -137,7 +139,33 @@ These handle OAuth and configuration automatically.
 }
 ```
 
+### Browser Automation
+
+**Playwright** (Top 2 most popular MCP server)
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-playwright"]
+    }
+  }
+}
+```
+
 ### External Services
+
+**Google Services** (Official MCP — announced 2026)
+```json
+{
+  "mcpServers": {
+    "google": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://mcp.googleapis.com/sse"]
+    }
+  }
+}
+```
 
 **Asana (Remote SSE)**
 ```json
@@ -151,13 +179,15 @@ These handle OAuth and configuration automatically.
 }
 ```
 
-**Puppeteer (Browser Automation)**
+### Memory & Context
+
+**Context7** (Most popular MCP server — 11K+ views on FastMCP)
 ```json
 {
   "mcpServers": {
-    "puppeteer": {
+    "context7": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": ["-y", "context7-mcp"]
     }
   }
 }
@@ -239,7 +269,22 @@ label "bug" in the frontend repo.
 | Permission errors | Check env vars are set. Verify API keys. |
 | Slow responses | Too many servers. Disable unused ones. |
 
+## MCP Ecosystem (2026)
+
+The MCP ecosystem matured significantly in 2025-2026:
+
+- **Governance**: Anthropic donated MCP to the Agentic AI Foundation (AAIF) under the Linux Foundation (Dec 2025), co-founded by Anthropic, Block, and OpenAI
+- **SDK**: TypeScript SDK v1.27 (Feb 2026) — 34,700+ dependent projects on npm
+- **Scale**: 10,000+ public servers, MCP.so marketplace, FastMCP Python framework
+- **Google**: Official managed MCP servers for all Google/Google Cloud services, plus Colab MCP Server
+- **2026 Roadmap Priorities**: Transport & server discovery (`.well-known`), agentic lifecycle (Tasks primitive), enterprise readiness (audit trails, SSO, gateways), governance maturation
+
+### MCP Apps (Cursor 2.6)
+
+MCP servers can now render interactive UIs directly inside Cursor chats — charts from Amplitude, diagrams from Figma, whiteboards from tldraw. This is the "MCP Apps" feature introduced in Cursor 2.6 (March 3, 2026).
+
 ## Sources
 - [Cursor Docs: MCP](https://cursor.com/docs/context/mcp)
-- [TrueFoundry: MCP in Cursor](https://www.truefoundry.com/blog/mcp-servers-in-cursor-setup-configuration-and-security-guide)
-- [Fast.io: Cursor MCP Setup](https://fast.io/resources/cursor-mcp-server-setup/)
+- [MCP 2026 Roadmap](https://modelcontextprotocol.io/development/roadmap)
+- [FastMCP: Top MCP Servers 2026](https://fastmcp.me/blog/top-10-most-popular-mcp-servers)
+- [Google Cloud: MCP Support](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services)

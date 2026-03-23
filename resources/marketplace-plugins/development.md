@@ -12,10 +12,10 @@
 | **Supabase** | `/add-plugin supabase` | Database, auth, storage, edge functions |
 | **PlanetScale** | `/add-plugin planetscale` | MySQL, branching, deploy requests |
 | **Glean** | `/add-plugin glean` | Enterprise search, knowledge base |
-| **Render** | `/add-plugin render` | Cloud infrastructure, deployment |
+| **Render** | `/add-plugin render` | Deploy, debug, monitor — includes skills, rules, MCP, hooks, and agent |
 | **Redis** | `/add-plugin redis` | In-memory data store integration |
-| **Clerk** | `/add-plugin clerk` | Authentication, user management |
-| **JFrog** | `/add-plugin jfrog` | DevOps, artifact management |
+| **Clerk** | `/add-plugin clerk` | Auth toolkit — MCP server for SDK snippets, skills for setup, orgs, webhooks, testing |
+| **JFrog** | `/add-plugin jfrog` | JFrog Platform — MCP, security skills, supply-chain best practices |
 | **Postman** | `/add-plugin postman` | API lifecycle management |
 | **Elastic** | `/add-plugin elastic` | Search and analytics engine |
 | **Svelte** | `/add-plugin svelte` | Svelte/SvelteKit development tools |
