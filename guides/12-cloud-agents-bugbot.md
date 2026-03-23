@@ -194,7 +194,7 @@ Configure automations in the Cursor dashboard under **Automations** tab.
 
 ## Parallel Agents
 
-Run up to 8 agents concurrently from a single prompt.
+Run up to 20 agents concurrently (up from 8 at Cursor 2.0 launch).
 
 ### How It Works
 - Each agent gets an isolated git worktree (or remote machine)
