@@ -65,10 +65,13 @@ Create `.cursor/environment.json` in your repo:
 | Field | Type | Description |
 |-------|------|-------------|
 | `baseImage` | string | Base Docker image (e.g., `ghcr.io/cursor-images/node-20:latest`) |
-| `install` | string | Install command (runs once on setup) |
+| `build.dockerfile` | string | Path to custom Dockerfile for system-level deps |
+| `build.context` | string | Docker build context path |
+| `snapshot` | string | Cached disk image ID for fast boot (written by "Snapshot disk" in UI) |
+| `install` | string | Idempotent install command (runs once, disk state cached) |
 | `start` | string | Start command (runs when agent begins) |
 | `terminals` | array | Background processes (name, command, ports) |
-| `env` | object | Environment variables for the VM |
+| `env` | object | Environment variables (avoid secrets here — use Settings > Background Agents > Secrets) |
 | `persistedDirectories` | array | Directories preserved across sessions |
 
 ### Environment Priority
